@@ -10,7 +10,6 @@ const Table = React.forwardRef<
     {children}
   </table>
 ));
-Table.displayName = "Table";
 
 // Компонент заголовка таблицы
 const THeader = React.forwardRef<
@@ -25,7 +24,6 @@ const THeader = React.forwardRef<
     {children}
   </thead>
 ));
-THeader.displayName = "THeader";
 
 // Компонент ячейки заголовка таблицы
 const THead = React.forwardRef<
@@ -34,11 +32,10 @@ const THead = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <th
     ref={ref}
-    className={cn("text-left p-3 align-middle ", className)}
+    className={cn("text-left p-3 align-middle", className)}
     {...props}
   />
 ));
-THead.displayName = "THead";
 
 // Компонент тела таблицы
 const TBody = React.forwardRef<
@@ -49,7 +46,6 @@ const TBody = React.forwardRef<
     {children}
   </tbody>
 ));
-TBody.displayName = "TBody";
 
 // Компонент строки таблицы
 const TRow = React.forwardRef<
@@ -60,7 +56,6 @@ const TRow = React.forwardRef<
     {children}
   </tr>
 ));
-TRow.displayName = "TRow";
 
 // Компонент ячейки строки таблицы
 const TCell = React.forwardRef<
@@ -71,7 +66,6 @@ const TCell = React.forwardRef<
     {children}
   </td>
 ));
-TCell.displayName = "TCell";
 
 type TLoaderRowPropsType = {
   styleCellSus?: string;
@@ -114,7 +108,6 @@ const TLoaderRow = ({
   });
   return <>{LoaderRows}</>;
 };
-TLoaderRow.displayName = "TLoaderRow";
 
 // Проработать отсутствующие значаения
 const calcOpacity = ({

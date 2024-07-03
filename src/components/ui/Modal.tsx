@@ -10,8 +10,9 @@ import React, {
 import { MdOutlineClose } from "react-icons/md";
 import { cn } from "./lib/cn";
 
-export type ModalDataType = Record<string, any>;
-export type ModalContentType = ReactElement | null;
+export type ModalDataType = any;
+export type ModalContentType = ReactElement | null | undefined;
+
 export type ModalStyleType = {
   styleModalBG?: string;
   styleModalContainer?: string;
@@ -19,7 +20,6 @@ export type ModalStyleType = {
   styleModalContent?: string;
   styleCloseModal?: string;
 };
-
 interface ModalContextType {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -28,10 +28,7 @@ interface ModalContextType {
 
   modalData: ModalDataType;
 
-  styles: ModalStyleType;
-  setModalStyles: (styles: ModalStyleType) => void;
-
-  openModal: (content: ModalContentType, data: ModalDataType) => void;
+  openModal: (content?: ModalContentType, data?: ModalDataType) => void;
   closeModal: () => void;
 }
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -42,9 +39,8 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modalData, setModalData] = useState<ModalDataType>({
     modalData: null,
   });
-  const [styles, setStyles] = useState<ModalStyleType>({});
 
-  const openModal = (content: ModalContentType, data: ModalDataType) => {
+  const openModal = (content?: ModalContentType, data?: ModalDataType) => {
     setIsOpen(true);
     setModalContent(content);
     setModalData(data);
@@ -56,10 +52,6 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
     setModalData({
       modalData: null,
     });
-  };
-
-  const setModalStyles = (styles: ModalStyleType) => {
-    setStyles(styles);
   };
 
   return (
@@ -74,9 +66,6 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 
         openModal,
         closeModal,
-
-        styles,
-        setModalStyles,
       }}
     >
       {children}
@@ -96,9 +85,8 @@ const useModal = () => {
   return context;
 };
 
-const ModalBroker = () => {
-  const { closeModal, modalContent, modalData, isOpen, styles } = useModal();
-
+const ModalBroker = ({ ...props }: ModalStyleType) => {
+  const { closeModal, modalContent, modalData, isOpen } = useModal();
   if (!isOpen) return null;
 
   const {
@@ -107,7 +95,8 @@ const ModalBroker = () => {
     styleModalHeader,
     styleModalContent,
     styleCloseModal,
-  } = styles;
+    // settings,
+  } = props;
 
   return (
     <div
@@ -135,11 +124,16 @@ const ModalBroker = () => {
               styleCloseModal
             )}
           >
-            <MdOutlineClose className="h-3/4 w-3/4 " />
+            <MdOutlineClose className="h-3/4 w-3/4" />
           </div>
         </div>
-        <div className={styleModalContent}>
-          {modalContent && React.cloneElement(modalContent, modalData)}
+
+        <div className={cn("overflow-y-auto py-2", styleModalContent)}>
+          {modalContent &&
+            React.cloneElement(modalContent, {
+              modalData,
+              // settings
+            })}
         </div>
       </div>
     </div>

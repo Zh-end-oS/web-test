@@ -10,38 +10,15 @@ import {
   TRow,
   Table,
 } from "../ui/Table";
-import { ModalDataType, useModal } from "../ui/Modal";
+import { ModalDataType } from "../ui/Modal";
 
-// interface CustomTablePropsType {
-//   data?: DataType[];
-//   colContentHeader?: ColContentHeaderType;
-//   styleWrapper?: string;
-//   styleContainer?: string;
-//   styleTable?: string;
-//   styleHeader?: string;
-//   styleHeaderRow?: string;
-//   styleHeaderCell?: string;
-//   styleHBSeparator?: string;
-//   styleBody?: string;
-//   styleBodyRow?: string;
-//   styleBodyCell?: string;
-//   styleCellSus?: string;
-//   styleSusDiv?: string;
-
-//   countSusRows?: number;
-//   isFade?: boolean;
-//   minFadeOpacity?: number;
-//   isLoading?: boolean;
-
-//   modalRow?: boolean;
-//   openModalRow: OpenModalRowType;
-// }
 interface CustomTablePropsType {
-  headerProps: {
+  data?: DataType[];
+  headerProps?: {
     styleHeaderRow?: string;
     styleHeaderCell?: string;
   };
-  loaderProps: {
+  loaderProps?: {
     styleCellSus?: string;
     styleSusDiv?: string;
     countSusRows?: number;
@@ -51,11 +28,11 @@ interface CustomTablePropsType {
   bodyProps: {
     styleBodyRow?: string;
     styleBodyCell?: string;
-    data?: DataType[];
     modalRow?: boolean;
-    openModalRow: OpenModalRowType;
+    additionalHandlers?: Array<(...args: any[]) => any>;
+
   };
-  tableProps: {
+  tableProps?: {
     styleWrapper?: string;
     styleContainer?: string;
     styleTable?: string;
@@ -67,7 +44,6 @@ interface CustomTablePropsType {
   isLoading?: boolean;
 }
 
-type OpenModalRowType = (data: ModalDataType) => void;
 type HeaderRowPropsType = {
   styleHeaderCell?: string;
   styleHeaderRow?: string;
@@ -80,7 +56,8 @@ type DataRowsPropsType = {
   data?: DataType[];
   colContentHeader: ColContentHeaderType;
   modalRow?: boolean;
-  openModalRow: OpenModalRowType;
+  additionalHandlers?: Array<(...args: any[]) => any>;
+
 };
 
 type RowPropsType = {
@@ -90,7 +67,7 @@ type RowPropsType = {
   colContentHeader: ColContentHeaderType;
   id: number;
   modalRow?: boolean;
-  openModalRow: OpenModalRowType;
+  additionalHandlers?: Array<(...args: any[]) => any>;
 };
 
 type DataType = {
@@ -106,60 +83,13 @@ type ColContentHeaderType = {
  */
 const CustomTable = observer((props: CustomTablePropsType) => {
   const {
-    // data = [],
-    // colContentHeader = {},
-
-    // styleWrapper,
-    // styleContainer,
-    // styleTable,
-    // styleHeader,
-    // styleHeaderRow,
-    // styleHeaderCell,
-    // styleHBSeparator,
-    // styleBody,
-    // styleBodyRow,
-    // styleBodyCell,
-
-    // styleCellSus,
-    // styleSusDiv,
-    // countSusRows = 5,
-    // isFade = false,
-    // minFadeOpacity = 100,
-
-    // isLoading = false,
-
-    // modalRow = false,
-    // openModalRow,
-
-    colContentHeader = {},
-
     tableProps,
-    // styleWrapper,
-    // styleContainer,
-    // styleTable,
-    // styleHeader,
-    // styleHBSeparator,
-    // styleBody,
-
     headerProps,
-    // styleHeaderRow,
-    // styleHeaderCell,
-
     loaderProps,
-    // styleCellSus,
-    // styleSusDiv,
-    // countSusRows = 5,
-    // isFade = false,
-    // minFadeOpacity = 100,
-
     bodyProps,
-    // styleBodyRow,
-    // styleBodyCell,
-    // data = [],
-    // modalRow = false,
-    // openModalRow,
-
     isLoading = false,
+    data,
+    colContentHeader = {},
   } = props;
   const {
     styleWrapper,
@@ -168,7 +98,7 @@ const CustomTable = observer((props: CustomTablePropsType) => {
     styleHeader,
     styleHBSeparator,
     styleBody,
-  } = tableProps;
+  } = tableProps || {};
   const colCount = Object.keys(colContentHeader).length;
 
   return (
@@ -176,35 +106,14 @@ const CustomTable = observer((props: CustomTablePropsType) => {
       <div className={cn("w-full h-full overflow-auto", styleContainer)}>
         <Table className={styleTable}>
           <THeader className={styleHeader}>
-            <HeaderRow
-              {...headerProps}
-              colContentHeader={colContentHeader}
-              // styleHeaderRow={styleHeaderRow}
-              // styleHeaderCell={styleHeaderCell}
-            />
+            <HeaderRow {...headerProps} colContentHeader={colContentHeader} />
           </THeader>
           <div className={cn("w-full", styleHBSeparator)}></div>
           <TBody className={cn("[&_tr:last-child]:border-0", styleBody)}>
             {isLoading ? (
-              <TLoaderRow
-                {...loaderProps}
-                // styleSusDiv={styleSusDiv}
-                // styleCellSus={styleCellSus}
-                // countSusRows={countSusRows}
-                // isFade={isFade}
-                // minFadeOpacity={minFadeOpacity}
-                colCount={colCount}
-              />
+              <TLoaderRow {...loaderProps} colCount={colCount} />
             ) : (
-              <DataRows
-                {...bodyProps}
-                colContentHeader={colContentHeader}
-                // styleBodyRow={styleBodyRow}
-                // styleBodyCell={styleBodyCell}
-                // data={data}
-                // modalRow={modalRow}
-                // openModalRow={openModalRow}
-              />
+              <DataRows {...bodyProps} colContentHeader={colContentHeader} data={data}/>
             )}
           </TBody>
         </Table>
@@ -257,11 +166,11 @@ const Row = observer(
     id,
     styleBodyRow,
     styleBodyCell,
-    openModalRow,
+    additionalHandlers = [],
   }: // modalRow,
   RowPropsType) => {
     const handleClick = (d: ModalDataType) => {
-      openModalRow(d);
+      additionalHandlers.forEach(handler => handler(d));
     };
 
     const newD: DataType = {};
@@ -307,7 +216,6 @@ const Cell = observer(({ field, className }: CellPropsType) => {
 
     return () => clearTimeout(fadeOutTimeout);
   }, [field]);
-  // console.log(field);
 
   return (
     <TCell

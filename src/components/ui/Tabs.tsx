@@ -84,7 +84,6 @@ const TabTrigger: React.FC<TabTriggerPropsType> = ({
   const styleAll = styleTriggers || "";
   const styleAllAct = styleActiveTrigger || "";
   const styleAct = styleActiveTriggers || "";
-  console.log(styleAct);
   const isActive = value === activeTab;
 
   return (
