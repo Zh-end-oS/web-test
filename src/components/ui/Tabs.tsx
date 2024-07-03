@@ -18,9 +18,7 @@ type TabsPropsType = {
   styleActiveTriggers?: string;
 };
 
-/**
- * Обертка для табов
- */
+// Обертка для табов
 const Tabs: React.FC<TabsPropsType> = ({
   children,
   defaultValue,
@@ -48,9 +46,7 @@ type TabListPropsType = {
   className?: string;
 };
 
-/**
- * Обертка для кнопок
- */
+// Обертка для кнопок
 const TabList: React.FC<TabListPropsType> = ({ children, className }) => {
   return (
     <div className={cn("flex flex-row text-nowrap", className)}>{children}</div>
@@ -65,9 +61,7 @@ type TabTriggerPropsType = {
   className?: string;
 };
 
-/**
- * Кнопки смены табов
- */
+// Кнопки смены табов
 const TabTrigger: React.FC<TabTriggerPropsType> = ({
   children,
   value,
@@ -92,7 +86,7 @@ const TabTrigger: React.FC<TabTriggerPropsType> = ({
         "cursor-pointer text-center hover:bg-gray-50 hover:text-gray-700",
         className,
         styleAll,
-        isActive ? styleAllAct + " " + styleAct : "" //!!!!!!!!!!!!
+        isActive ? styleAllAct + " " + styleAct : ""
       )}
       onClick={handleClick}
     >
@@ -107,9 +101,7 @@ type TabContentPropsType = {
   className?: string;
 };
 
-/**
- * Содержимое табов
- */
+// Содержимое табов
 const TabContent: React.FC<TabContentPropsType> = ({
   children,
   value,

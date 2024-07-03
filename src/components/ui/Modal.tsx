@@ -12,6 +12,10 @@ import { cn } from "./lib/cn";
 
 export type ModalDataType = any;
 export type ModalContentType = ReactElement | null | undefined;
+export type ModalContentDataType = {
+  content?: ModalContentType;
+  data?: ModalDataType;
+};
 
 export type ModalStyleType = {
   styleModalBG?: string;
@@ -28,7 +32,7 @@ interface ModalContextType {
 
   modalData: ModalDataType;
 
-  openModal: (content?: ModalContentType, data?: ModalDataType) => void;
+  openModal: (props: ModalContentDataType) => void;
   closeModal: () => void;
 }
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -40,7 +44,8 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
     modalData: null,
   });
 
-  const openModal = (content?: ModalContentType, data?: ModalDataType) => {
+  const openModal = (props: ModalContentDataType) => {
+    const { content, data } = props;
     setIsOpen(true);
     setModalContent(content);
     setModalData(data);
@@ -60,12 +65,11 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
         isOpen,
         setIsOpen,
 
-        modalContent,
-
-        modalData,
-
         openModal,
         closeModal,
+
+        modalContent,
+        modalData,
       }}
     >
       {children}
@@ -95,7 +99,6 @@ const ModalBroker = ({ ...props }: ModalStyleType) => {
     styleModalHeader,
     styleModalContent,
     styleCloseModal,
-    // settings,
   } = props;
 
   return (
@@ -132,7 +135,6 @@ const ModalBroker = ({ ...props }: ModalStyleType) => {
           {modalContent &&
             React.cloneElement(modalContent, {
               modalData,
-              // settings
             })}
         </div>
       </div>

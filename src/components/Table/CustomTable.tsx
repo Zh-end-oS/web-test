@@ -28,9 +28,7 @@ interface CustomTablePropsType {
   bodyProps: {
     styleBodyRow?: string;
     styleBodyCell?: string;
-    modalRow?: boolean;
     additionalHandlers?: Array<(...args: any[]) => any>;
-
   };
   tableProps?: {
     styleWrapper?: string;
@@ -55,9 +53,7 @@ type DataRowsPropsType = {
   styleBodyCell?: string;
   data?: DataType[];
   colContentHeader: ColContentHeaderType;
-  modalRow?: boolean;
   additionalHandlers?: Array<(...args: any[]) => any>;
-
 };
 
 type RowPropsType = {
@@ -66,21 +62,13 @@ type RowPropsType = {
   d: DataType;
   colContentHeader: ColContentHeaderType;
   id: number;
-  modalRow?: boolean;
   additionalHandlers?: Array<(...args: any[]) => any>;
 };
 
-type DataType = {
-  [key: string]: string | number;
-};
+type DataType = Record<string, string | number | boolean>;
+type ColContentHeaderType = Record<string, string | number | boolean>;
 
-type ColContentHeaderType = {
-  [key: string]: string;
-};
-
-/**
- * Таблица
- */
+// Таблица
 const CustomTable = observer((props: CustomTablePropsType) => {
   const {
     tableProps,
@@ -113,7 +101,11 @@ const CustomTable = observer((props: CustomTablePropsType) => {
             {isLoading ? (
               <TLoaderRow {...loaderProps} colCount={colCount} />
             ) : (
-              <DataRows {...bodyProps} colContentHeader={colContentHeader} data={data}/>
+              <DataRows
+                {...bodyProps}
+                colContentHeader={colContentHeader}
+                data={data}
+              />
             )}
           </TBody>
         </Table>
@@ -124,9 +116,7 @@ const CustomTable = observer((props: CustomTablePropsType) => {
 
 export default CustomTable;
 
-/**
- * Строки шапки
- */
+// Строки шапки
 const HeaderRow = ({
   styleHeaderCell,
   styleHeaderRow,
@@ -143,9 +133,7 @@ const HeaderRow = ({
   );
 };
 
-/**
- * Строки таблицы
- */
+// Строки таблицы
 const DataRows = observer(({ data = [], ...rowProps }: DataRowsPropsType) => {
   return (
     <>
@@ -156,9 +144,7 @@ const DataRows = observer(({ data = [], ...rowProps }: DataRowsPropsType) => {
   );
 });
 
-/**
- * Строка таблицы
- */
+// Строка таблицы
 const Row = observer(
   ({
     d,
@@ -167,19 +153,17 @@ const Row = observer(
     styleBodyRow,
     styleBodyCell,
     additionalHandlers = [],
-  }: // modalRow,
-  RowPropsType) => {
+  }: RowPropsType) => {
     const handleClick = (d: ModalDataType) => {
-      additionalHandlers.forEach(handler => handler(d));
+      additionalHandlers.forEach((handler) => handler(d));
     };
 
     const newD: DataType = {};
     Object.keys(colContentHeader).forEach((header) => {
       newD[header] = d.hasOwnProperty(header) ? d[header] : "–"; // Значение по умолчанию для отсутствующих полей
     });
+    console.log('3')
 
-    // Проверка на обновление строк. Если в консоль приходит меньше 26 сообщений, то обновляются только измененные строки. Если 26, то обновились все строки (возможно при новом рендере страницы или с случае изменения данных каждого тикера (каждая таблица обновляет данные только для поступающей в нее информации, то есть если в одной таблице обновится последняя цена тикера, а данные из второй не изменились, то во второй таблице эта строка обновляться не будет))
-    console.log(d.symbol);
     return (
       <>
         <TRow
@@ -201,7 +185,7 @@ const Row = observer(
 
 type CellPropsType = {
   className?: string;
-  field: string | number;
+  field: string | number | boolean;
 };
 const Cell = observer(({ field, className }: CellPropsType) => {
   const [isFading, setIsFading] = useState(false);
@@ -216,7 +200,6 @@ const Cell = observer(({ field, className }: CellPropsType) => {
 
     return () => clearTimeout(fadeOutTimeout);
   }, [field]);
-
   return (
     <TCell
       className={cn(
@@ -226,7 +209,7 @@ const Cell = observer(({ field, className }: CellPropsType) => {
           : "opacity-1 transition-all duration-300 ease-in"
       )}
     >
-      {currentData}
+      {currentData.toString()}
     </TCell>
   );
 });
