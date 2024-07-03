@@ -469,21 +469,3 @@ export default function YourComponent() {
 
 </details>
 
-<style>
-  details summary {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  details summary::before {
-    content: "▶";
-    display: inline-block;
-    margin-right: 6px;
-    transition: transform 0.2s ease;
-  }
-
-  details[open] summary::before {
-    content: "▼";
-  }
-</style>
