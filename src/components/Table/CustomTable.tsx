@@ -162,7 +162,6 @@ const Row = observer(
     Object.keys(colContentHeader).forEach((header) => {
       newD[header] = d.hasOwnProperty(header) ? d[header] : "–"; // Значение по умолчанию для отсутствующих полей
     });
-    console.log('3')
 
     return (
       <>
