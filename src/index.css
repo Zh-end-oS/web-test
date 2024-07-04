@@ -118,236 +118,12 @@ code {
   font-style: normal;
 }
 
-/* Определяем кастомные свойства для анимации */
-@property --rr {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: -90deg;
-}
-
-@property --ar {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --br {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --cr {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --dr {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --er {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --fr {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --gr {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --hr {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --ir {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-
-@property --rl {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 90deg;
-}
-
-@property --al {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --bl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --cl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --dl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --el {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --fl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --gl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --hl {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-@property --il {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-.back::before,
-.back::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  user-select: none;
-  pointer-events: none;
-}
-
-.back::before {
-  animation: animate-l 2s cubic-bezier(0.2, 0, 0, 1) forwards,
-    opacity 2s cubic-bezier(0.2, 0, 0, 1) forwards;
-  left: 0;
-  right: 50%;
-  background: conic-gradient(
-    from var(--rl) at 50% 30%,
-    rgba(0, 0, 0, 0) var(--al),
-    rgba(231, 82, 170, 0.18) var(--bl),
-    rgba(221, 79, 164, 0.6) var(--cl),
-    rgb(196, 63, 148) var(--dl),
-    rgb(239, 89, 178) var(--el),
-    rgb(135, 1, 81) var(--fl),
-    rgba(24, 19, 26, 0.13) var(--gl),
-    rgba(7, 22, 18, 0) var(--hl),
-    rgba(0, 0, 0, 0) var(--il)
-  );
-}
-
-.back::after {
-  animation: animate-r 2s cubic-bezier(0.2, 0, 0, 1) forwards,
-    opacity 2s cubic-bezier(0.2, 0, 0, 1) forwards;
-  right: 0;
-  left: 50%;
-  background: conic-gradient(
-    from var(--rr) at 50% 30%,
-    rgba(0, 0, 0, 0) var(--ar),
-    rgba(7, 22, 18, 0) var(--br),
-    rgba(24, 19, 26, 0.13) var(--cr),
-    rgb(135, 1, 81) var(--dr),
-    rgb(239, 89, 178) var(--er),
-    rgb(196, 63, 148) var(--fr),
-    rgba(221, 79, 164, 0.6) var(--gr),
-    rgba(231, 82, 170, 0.18) var(--hr),
-    rgba(0, 0, 0, 0) var(--ir)
-  );
-}
-
 @keyframes opacity {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
-  }
-}
-@keyframes animate-l {
-  0% {
-    --rl: 90deg;
-    --al: 0%;
-    --bl: 0%;
-    --cl: 0%;
-    --dl: 0%;
-    --el: 0%;
-    --fl: 0%;
-    --gl: 0%;
-    --hl: 0%;
-    --il: 0%;
-  }
-  100% {
-    --rl: 75.6deg;
-    --al: 0%;
-    --bl: 3.6%;
-    --cl: 3.85%;
-    --dl: 3.99%;
-    --el: 4.15%;
-    --fl: 25%;
-    --gl: 38%;
-    --hl: 88%;
-    --il: 100%;
-    opacity: 1;
-  }
-}
-
-@keyframes animate-r {
-  0% {
-    --rr: -90deg;
-    --ar: 100%;
-    --br: 100%;
-    --cr: 100%;
-    --dr: 100%;
-    --er: 100.03%;
-    --fr: 100%;
-    --gr: 100%;
-    --hr: 100%;
-    --ir: 100%;
-  }
-  100% {
-    --rr: -75.6deg;
-    --ar: 0%;
-    --br: 12%;
-    --cr: 62%;
-    --dr: 75%;
-    --er: 95.85%;
-    --fr: 95.99%;
-    --gr: 96.15%;
-    --hr: 96.4%;
-    --ir: 100%;
   }
 }
 .cyrcle {
@@ -358,7 +134,7 @@ code {
   right: 25%;
   top: 30%;
   filter: blur(110px);
-  background: rgb(196, 0, 116);
+  background: rgba(89, 221, 239, 0.5);
 }
 .quotations::after {
   position: absolute;
@@ -367,7 +143,7 @@ code {
   top: 0;
   background: radial-gradient(
     at top left,
-    rgb(200, 255, 255),
+    rgba(200, 255, 255,0.5),
     rgba(0, 255, 255, 0) 70%
   );
   filter: blur(80px);
@@ -382,7 +158,7 @@ code {
   right: 0;
   background: radial-gradient(
     at bottom right,
-    rgb(200, 255, 255),
+    rgba(200, 255, 255,0.5),
     rgba(0, 255, 255, 0) 70%
   );
   filter: blur(80px);

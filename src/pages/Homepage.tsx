@@ -23,8 +23,7 @@ export default function Homepage() {
       </div>
       <div className=" absolute top-0 bottom-0 left-0 right-0 w-full ">
         <div className="cyrcle"></div>
-        <div className="bg-cyan-300 absolute top-0 bottom-0 left-0 right-0 w-full mix-blend-color z-20"></div>
-        <div className="back flex w-full h-full z-10"></div>
+        <div className="absolute top-0 bottom-0 left-0 right-0 w-full z-20"></div>
       </div>
     </div>
   );
