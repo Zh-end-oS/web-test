@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-const url = "http://localhost:5000/api/tickers";
+const url = "/api/tickers";
 
 export type TickerType = {
   sequence: number;
@@ -27,7 +27,15 @@ class APIPoloniex {
   // Запрос на тикеры
   fetchAPIPoloniex = async (url: string): Promise<any> => {
     try {
-      const res = await fetch('http://localhost:5000/api/tickers')
+      const res = await fetch(url, {
+        method: "GET",
+
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "applications/json",
+        },
+
+      });
 
       if (!res.ok) {
         throw new Error(`Ошибка HTTP. Cтатус: ${res.status}.`);
@@ -75,7 +83,9 @@ class APIPoloniex {
             currentTicker[key as keyof TickerType]
           ) {
             // Обновить свойство только если оно изменилось
-            (currentTicker[key as keyof TickerType] as TickerType[keyof TickerType]) =
+            (currentTicker[
+              key as keyof TickerType
+            ] as TickerType[keyof TickerType]) =
               newTicker[key as keyof TickerType];
           }
         }
@@ -87,4 +97,5 @@ class APIPoloniex {
   }
 }
 
-export default new APIPoloniex();
+const apiPoloniexInstance = new APIPoloniex();
+export default apiPoloniexInstance;

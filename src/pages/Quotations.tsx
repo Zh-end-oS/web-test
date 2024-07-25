@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CustomTable from "../components/Table/CustomTable";
 import APIPoloniex from "../store/APIPoloniex";
 import toast, { Toaster } from "react-hot-toast";
