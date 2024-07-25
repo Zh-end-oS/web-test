@@ -2,6 +2,7 @@
   "name": "web-test",
   "version": "1.1.1",
   "homepage": "https://zh-end-os.github.io/web-test/",
+  "proxy": "https://localhost:5000/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -12,7 +13,10 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-icons": "^3.0.0",
+    "axios": "^1.7.2",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
     "mobx": "^6.12.4",
     "mobx-react-lite": "^4.0.7",
     "react": "^18.3.1",

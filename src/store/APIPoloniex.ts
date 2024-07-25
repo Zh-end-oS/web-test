@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-const url = "https://futures-api.poloniex.com/api/v2/tickers";
+const url = "http://localhost:5000/api/tickers";
 
 export type TickerType = {
   sequence: number;
@@ -27,7 +27,7 @@ class APIPoloniex {
   // Запрос на тикеры
   fetchAPIPoloniex = async (url: string): Promise<any> => {
     try {
-      const res = await fetch(url);
+      const res = await fetch('http://localhost:5000/api/tickers')
 
       if (!res.ok) {
         throw new Error(`Ошибка HTTP. Cтатус: ${res.status}.`);
